@@ -171,13 +171,14 @@ export default function HerbalGuide() {
                 <motion.div
                   key={remedy.id}
                   layout
-                  initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95, y: 10 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96, y: 12 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
                   transition={{
-                    duration: 0.2,
-                    ease: [0.25, 1, 0.5, 1],
-                    delay: shouldReduceMotion ? 0 : i * 0.04,
+                    type: 'spring',
+                    stiffness: 420,
+                    damping: 28,
+                    delay: shouldReduceMotion ? 0 : i * 0.05,
                   }}
                 >
                   <Card className="border-none shadow-glass card-premium h-full flex flex-col rounded-[24px] sm:rounded-[32px] overflow-hidden group bg-white/70 backdrop-blur-xl">
@@ -267,7 +268,7 @@ export default function HerbalGuide() {
                 Our AI can analyze your unique health profile to suggest bio-compatible botanicals that avoid drug-herb interactions.
               </p>
             </div>
-            <Button className="w-full lg:w-auto rounded-xl sm:rounded-2xl h-12 sm:h-14 px-8 sm:px-10 font-black uppercase tracking-widest text-[10px] sm:text-[12px] shadow-xl shadow-primary/10 active:scale-95 transition-all">
+            <Button className="w-full lg:w-auto rounded-xl sm:rounded-2xl h-12 sm:h-14 px-8 sm:px-10 font-black uppercase tracking-widest text-[10px] sm:text-[12px] shadow-xl shadow-primary/10 btn-press">
               Consult Clinical Intelligence
             </Button>
           </div>

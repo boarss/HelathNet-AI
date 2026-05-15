@@ -240,13 +240,13 @@ export default function ChatInterface() {
                 {messages.map((m, i) => (
                   <motion.div
                     key={m.id}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    initial={{ opacity: 0, y: 16, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ 
                       type: 'spring', 
-                      stiffness: 400, 
-                      damping: 30,
-                      delay: 0.05 
+                      stiffness: 420, 
+                      damping: 28,
+                      delay: i * 0.05 
                     }}
                     className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
@@ -291,8 +291,9 @@ export default function ChatInterface() {
                 {/* Feedback UI (Compare Step) */}
                 {pendingFeedback && !isLoading && (
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 16, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 28 }}
                     className="flex justify-start pt-4"
                   >
                     <Card className="bg-primary/5 border-primary/20 shadow-none rounded-[24px] w-full max-w-[85%]">
@@ -319,26 +320,18 @@ export default function ChatInterface() {
                 )}
               </AnimatePresence>
 
-              {/* Enhanced Loading Indicator */}
+              {/* Skeleton Loading Indicator */}
               {isLoading && (
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }} 
+                  initial={{ opacity: 0, y: 12 }} 
                   animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   className="flex justify-start pt-2"
                 >
-                  <div className="bg-white/60 border border-white rounded-[16px] sm:rounded-[20px] px-4 py-3 sm:px-5 sm:py-3.5 shadow-sm">
-                    <div className="flex gap-1.5 sm:gap-2">
-                      {[0, 1, 2].map((i) => (
-                        <span
-                          key={i}
-                          className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-primary rounded-full shimmer"
-                          style={{ 
-                            animation: `shimmer 1.5s infinite ease-in-out`,
-                            animationDelay: `${i * 0.2}s` 
-                          }}
-                        />
-                      ))}
-                    </div>
+                  <div className="bg-white/60 border border-white rounded-tl-none rounded-[20px] px-5 py-4 sm:px-6 sm:py-5 shadow-sm space-y-2.5 w-[60%] max-w-xs">
+                    <div className="skeleton h-3 w-full rounded-full" />
+                    <div className="skeleton h-3 w-[75%] rounded-full" />
+                    <div className="skeleton h-3 w-[50%] rounded-full" />
                   </div>
                 </motion.div>
               )}
@@ -350,7 +343,7 @@ export default function ChatInterface() {
         <div className="p-4 sm:p-8 mt-auto border-t border-white/40 bg-white/20">
           <div className="relative group max-w-4xl mx-auto">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-emerald-500/20 rounded-[28px] sm:rounded-[32px] blur opacity-0 group-focus-within:opacity-100 transition duration-500" />
-            <div className="relative flex items-center gap-2 sm:gap-3 bg-white p-2 sm:p-3 rounded-[24px] sm:rounded-[28px] border border-white/50 shadow-xl focus-within:shadow-2xl focus-within:shadow-primary/5 transition-all duration-300">
+            <div className="relative flex items-center gap-2 sm:gap-3 bg-white p-2 sm:p-3 rounded-[24px] sm:rounded-[28px] border border-white/50 shadow-xl input-glow transition-all duration-300">
               <Input
                 ref={inputRef}
                 placeholder="Ask HealthNet..."
@@ -363,7 +356,7 @@ export default function ChatInterface() {
               <Button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-slate-900 hover:bg-black text-white font-black uppercase tracking-widest text-[9px] sm:text-[11px] transition-all transform active:scale-95 shadow-lg shrink-0"
+                className="h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-slate-900 hover:bg-black text-white font-black uppercase tracking-widest text-[9px] sm:text-[11px] btn-press shadow-lg shrink-0"
               >
                 <span className="hidden xs:inline mr-2">Send</span> <Send className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </Button>

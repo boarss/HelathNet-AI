@@ -133,7 +133,7 @@ export default function ImagingAnalysis() {
           {/* Action buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
-              className="flex-1 rounded-xl sm:rounded-2xl h-11 sm:h-12 order-2 sm:order-1 font-bold text-slate-500 bg-slate-50 hover:bg-slate-100 border-none"
+              className="flex-1 rounded-xl sm:rounded-2xl h-11 sm:h-12 order-2 sm:order-1 font-bold text-slate-500 bg-slate-50 hover:bg-slate-100 border-none btn-press"
               variant="secondary"
               onClick={handleClearImage}
               disabled={!image}
@@ -141,7 +141,7 @@ export default function ImagingAnalysis() {
               Clear
             </Button>
             <Button
-              className="flex-1 rounded-xl sm:rounded-2xl h-11 sm:h-12 order-1 sm:order-2 font-black uppercase tracking-widest text-[10px] sm:text-[11px] shadow-lg shadow-primary/10 active:scale-95 transition-all"
+              className="flex-1 rounded-xl sm:rounded-2xl h-11 sm:h-12 order-1 sm:order-2 font-black uppercase tracking-widest text-[10px] sm:text-[11px] shadow-lg shadow-primary/10 btn-press"
               onClick={handleAnalyze}
               disabled={!image || isAnalyzing}
             >
@@ -167,9 +167,10 @@ export default function ImagingAnalysis() {
               {analysis ? (
                 <motion.div
                   key="result"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 12, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 420, damping: 28 }}
                   className="space-y-5 sm:space-y-6"
                 >
                   <div className="p-4 sm:p-5 bg-orange-50/50 border border-orange-100 rounded-[20px] flex gap-3 sm:gap-4">
@@ -192,10 +193,18 @@ export default function ImagingAnalysis() {
               ) : isAnalyzing ? (
                 <motion.div
                   key="loading"
-                  className="flex flex-col items-center justify-center py-20 gap-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                  className="flex flex-col items-center justify-center py-20 gap-6"
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-3 border-primary/20 border-t-primary animate-spin" />
-                  <p className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">Processing Scan…</p>
+                  <div className="space-y-3 w-full max-w-xs">
+                    <div className="skeleton h-4 w-full rounded-full" />
+                    <div className="skeleton h-4 w-[85%] rounded-full" />
+                    <div className="skeleton h-4 w-[60%] rounded-full" />
+                    <div className="skeleton h-4 w-[70%] rounded-full" />
+                  </div>
+                  <p className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">Analyzing Scan…</p>
                 </motion.div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-slate-300 py-20 gap-4 sm:gap-6">

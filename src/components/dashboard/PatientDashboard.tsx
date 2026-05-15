@@ -65,12 +65,13 @@ export default function PatientDashboard() {
           {patientVitals.map((vital, i) => (
             <motion.div
               key={vital.label}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{
-                delay: shouldReduceMotion ? 0 : i * 0.1,
-                duration: 0.4,
-                ease: [0.25, 1, 0.5, 1],
+                type: 'spring',
+                stiffness: 420,
+                damping: 28,
+                delay: shouldReduceMotion ? 0 : i * 0.08,
               }}
             >
               <div className="glass-panel card-premium p-5 sm:p-6 flex flex-col gap-4 sm:gap-5 rounded-[24px] sm:rounded-[28px]">
@@ -98,9 +99,9 @@ export default function PatientDashboard() {
       {/* Conditions & Medications - Staggered Glass Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 pt-4">
         <motion.div
-           initial={{ opacity: 0, x: -20 }}
-           animate={{ opacity: 1, x: 0 }}
-           transition={{ delay: 0.3 }}
+           initial={{ opacity: 0, x: -16, scale: 0.97 }}
+           animate={{ opacity: 1, x: 0, scale: 1 }}
+           transition={{ type: 'spring', stiffness: 400, damping: 30, delay: 0.3 }}
            className="h-full"
         >
           <Card className="h-full group bg-white/40 border-white/60 shadow-glass rounded-[24px] sm:rounded-[32px] overflow-hidden backdrop-blur-md">
@@ -122,9 +123,9 @@ export default function PatientDashboard() {
         </motion.div>
 
         <motion.div
-           initial={{ opacity: 0, x: 20 }}
-           animate={{ opacity: 1, x: 0 }}
-           transition={{ delay: 0.4 }}
+           initial={{ opacity: 0, x: 16, scale: 0.97 }}
+           animate={{ opacity: 1, x: 0, scale: 1 }}
+           transition={{ type: 'spring', stiffness: 400, damping: 30, delay: 0.4 }}
            className="h-full"
         >
           <Card className="h-full group bg-white/40 border-white/60 shadow-glass rounded-[24px] sm:rounded-[32px] overflow-hidden backdrop-blur-md">
@@ -148,9 +149,9 @@ export default function PatientDashboard() {
 
       {/* Vaccination Schedule - Full Width Card */}
       <motion.div
-         initial={{ opacity: 0, y: 30 }}
-         animate={{ opacity: 1, y: 0 }}
-         transition={{ delay: 0.5 }}
+         initial={{ opacity: 0, y: 20, scale: 0.97 }}
+         animate={{ opacity: 1, y: 0, scale: 1 }}
+         transition={{ type: 'spring', stiffness: 380, damping: 30, delay: 0.5 }}
          className="pt-4"
       >
         <Card className="bg-white/40 border-white/60 shadow-glass rounded-[32px] sm:rounded-[40px] overflow-hidden backdrop-blur-md">
